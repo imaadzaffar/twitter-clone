@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Twitter Clone</string>
+    <string name="menu_logout">Logout</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="login_fragment_label">Login Fragment</string>
+    <string name="home_fragment_label">Home Fragment</string>
+    <string name="feed_fragment_label">Feed Fragment</string>
+    <string name="friends_fragment_label">Friends Fragment</string>
+</resources>
