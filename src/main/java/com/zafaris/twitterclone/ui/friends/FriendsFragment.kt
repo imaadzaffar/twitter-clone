@@ -36,22 +36,9 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = "Friends"
-        getFriends()
-    }
 
-    private fun getFriends() {
-        val friendsQuery = ParseQuery.getQuery<ParseObject>("_User")
-        friendsQuery.whereEqualTo("username", ParseUser.getCurrentUser().username)
-        friendsQuery.findInBackground { friends, friendsException ->
-            if (friends.size > 0 && friendsException == null) {
-                Log.d("Friends List", friends[0].getList<String>("friends").toString())
-                friendsList = friends[0].getList("friends")!!
-                getUsers()
-            } else {
-                Log.d("FriendsFragment", friendsException.message.toString())
-                Toast.makeText(activity, "Error retrieving friends...", Toast.LENGTH_SHORT).show()
-            }
-        }
+        friendsList = ParseUser.getCurrentUser().getList("friends")!!
+        getUsers()
     }
 
     private fun getUsers() {

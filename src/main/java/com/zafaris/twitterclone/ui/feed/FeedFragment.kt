@@ -54,8 +54,8 @@ class FeedFragment : Fragment() {
                     }
 
                     feedAdapter = FeedAdapter(context, tweetsList)
-                    recyclerview_tweets.adapter = feedAdapter
-                    recyclerview_tweets.layoutManager = LinearLayoutManager(activity)
+                    recyclerview_feed.adapter = feedAdapter
+                    recyclerview_feed.layoutManager = LinearLayoutManager(activity)
                 } else {
                     Toast.makeText(activity, "No new tweets available...", Toast.LENGTH_SHORT).show()
                 }
