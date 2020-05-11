@@ -1,4 +1,4 @@
-package com.zafaris.twitterclone
+package com.zafaris.twitterclone.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.zafaris.twitterclone.R
 
 /**
  * A simple [Fragment] subclass.

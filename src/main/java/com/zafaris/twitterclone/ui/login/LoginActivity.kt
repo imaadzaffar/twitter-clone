@@ -1,12 +1,13 @@
-package com.zafaris.twitterclone
+package com.zafaris.twitterclone.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.parse.ParseException
 import com.parse.ParseUser
+import com.zafaris.twitterclone.R
+import com.zafaris.twitterclone.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 private const val TAG = "LoginActivity"
@@ -56,12 +57,14 @@ class LoginActivity : AppCompatActivity() {
                 user.username = username
                 user.setPassword(password)
                 user.signUpInBackground { parseException ->
-                    if (parseException.code == ParseException.USERNAME_TAKEN) {
-                        Toast.makeText(this, "Username taken / Incorrect password", Toast.LENGTH_SHORT).show()
-                    } else {
+                    if (parseException == null) {
                         Toast.makeText(this, "Successfully signed up", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
+                    } else if (parseException.code == ParseException.USERNAME_TAKEN) {
+                        Toast.makeText(this, "Username taken / Incorrect password", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, parseException.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
