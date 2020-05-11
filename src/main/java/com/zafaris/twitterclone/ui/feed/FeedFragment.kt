@@ -22,6 +22,7 @@ class FeedFragment : Fragment() {
 
     private lateinit var feedAdapter: FeedAdapter
     private val tweetsList: MutableList<Tweet> = ArrayList()
+    private lateinit var friendsList: List<String>
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +36,11 @@ class FeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = "Feed"
 
-        val friendsList: List<String> = ParseUser.getCurrentUser().getList("friends")!!
+        friendsList = ParseUser.getCurrentUser().getList("friends")!!
+        updateFeed()
+    }
 
+    private fun updateFeed() {
         val feedQuery = ParseQuery.getQuery<ParseObject>("Tweet")
         feedQuery.whereContainedIn("username", friendsList)
         feedQuery.orderByDescending("createdAt")
@@ -65,6 +69,5 @@ class FeedFragment : Fragment() {
                 Toast.makeText(activity, "Error retrieving tweets...", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 }
