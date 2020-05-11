@@ -2,15 +2,12 @@ package com.zafaris.twitterclone.ui.feed
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.zafaris.twitterclone.R
@@ -26,8 +23,9 @@ class FeedFragment : Fragment() {
     private val tweetsList: MutableList<Tweet> = ArrayList()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_feed, container, false)
@@ -52,8 +50,8 @@ class FeedFragment : Fragment() {
                 }
 
                 feedAdapter = FeedAdapter(context, tweetsList)
-                recyclerview_tweets.adapter = feedAdapter
-                recyclerview_tweets.layoutManager = LinearLayoutManager(activity)
+                recyclerview_feed.adapter = feedAdapter
+                recyclerview_feed.layoutManager = LinearLayoutManager(activity)
 
             } else {
                 Log.d("FeedFragment", parseException.message.toString())

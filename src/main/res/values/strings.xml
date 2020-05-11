@@ -7,5 +7,5 @@
     <string name="feed_fragment_label">Feed Fragment</string>
     <string name="friends_fragment_label">Friends Fragment</string>
 
-    <string name="tweet_username">\@%1$s</string>
+    <string name="twitter_username">\@%1$s</string>
 </resources>

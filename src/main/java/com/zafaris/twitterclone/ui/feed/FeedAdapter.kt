@@ -1,6 +1,5 @@
 package com.zafaris.twitterclone.ui.feed
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -17,15 +16,15 @@ class FeedAdapter(private val context: Context?, private val tweetsList: List<Tw
     }
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
-        holder.usernameTextView.text = context?.resources?.getString(R.string.tweet_username, tweetsList[position].username)
+        holder.usernameTextView.text = context?.resources?.getString(R.string.twitter_username, tweetsList[position].username)
         holder.messageTextView.text = tweetsList[position].message
     }
 
     override fun getItemCount(): Int = tweetsList.size
 
     inner class FeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val usernameTextView: TextView = itemView.findViewById(R.id.textview_username)
-        val messageTextView: TextView = itemView.findViewById(R.id.textview_message)
+        val usernameTextView: TextView = itemView.findViewById(R.id.textview_feed_username)
+        val messageTextView: TextView = itemView.findViewById(R.id.textview_feed_message)
     }
 
 }
