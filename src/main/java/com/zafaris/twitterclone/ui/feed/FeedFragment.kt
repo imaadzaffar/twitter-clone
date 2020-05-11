@@ -6,13 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.parse.ParseObject
 import com.parse.ParseQuery
+import com.parse.ParseUser
 import com.zafaris.twitterclone.R
 import com.zafaris.twitterclone.model.Tweet
 import kotlinx.android.synthetic.main.fragment_feed.*
@@ -37,23 +35,30 @@ class FeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = "Feed"
 
-        val query = ParseQuery.getQuery<ParseObject>("Tweet")
-        //TODO: query.whereContainedIn("username", friendsUsernames)
-        query.orderByDescending("createdAt")
-        query.findInBackground { tweets, parseException ->
-            if (tweets.size > 0 && parseException == null) {
-                Log.d("FeedFragment", "Successfully retrieved tweets")
+        val friendsList: List<String> = ParseUser.getCurrentUser().getList("friends")!!
 
-                for (tweet in tweets) {
-                    val username = tweet.getString("username")!!
-                    val message = tweet.getString("message")!!
-                    Log.d("Tweet", "username: $username, message: $message")
-                    tweetsList.add(Tweet(username, message))
+        val feedQuery = ParseQuery.getQuery<ParseObject>("Tweet")
+        feedQuery.whereContainedIn("username", friendsList)
+        feedQuery.orderByDescending("createdAt")
+        feedQuery.findInBackground { tweets, parseException ->
+            if (parseException == null) {
+
+                if (tweets.size > 0) {
+                    Log.d("FeedFragment", "Successfully retrieved tweets")
+
+                    for (tweet in tweets) {
+                        val username = tweet.getString("username")!!
+                        val message = tweet.getString("message")!!
+                        Log.d("Tweet", "username: $username, message: $message")
+                        tweetsList.add(Tweet(username, message))
+                    }
+
+                    feedAdapter = FeedAdapter(context, tweetsList)
+                    recyclerview_tweets.adapter = feedAdapter
+                    recyclerview_tweets.layoutManager = LinearLayoutManager(activity)
+                } else {
+                    Toast.makeText(activity, "No new tweets available...", Toast.LENGTH_SHORT).show()
                 }
-
-                feedAdapter = FeedAdapter(context, tweetsList)
-                recyclerview_tweets.adapter = feedAdapter
-                recyclerview_tweets.layoutManager = LinearLayoutManager(activity)
 
             } else {
                 Log.d("FeedFragment", parseException.message.toString())
