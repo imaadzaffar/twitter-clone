@@ -1,13 +1,19 @@
 package com.zafaris.twitterclone.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.parse.ParseObject
+import com.parse.ParseUser
 import com.zafaris.twitterclone.R
+
 
 /**
  * A simple [Fragment] subclass.
@@ -37,8 +43,33 @@ class HomeFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.button_tweet).setOnClickListener {
-            //TODO: Send tweet dialog
+            showSendTweetDialog()
         }
+    }
+
+    private fun showSendTweetDialog() {
+        val editText = EditText(context)
+
+        AlertDialog.Builder(context!!, R.style.Theme_AppCompat_Light_Dialog_Alert)
+            .setTitle("Send Tweet")
+            .setView(editText)
+            .setPositiveButton("Send") { _, _ ->
+                if (editText.text.isNotEmpty()) {
+
+                    val tweet = ParseObject("Tweet")
+                    tweet.put("username", ParseUser.getCurrentUser().username)
+                    tweet.put("message", editText.text.toString())
+                    tweet.saveInBackground {
+                        Toast.makeText(activity, "Successfully sent Tweet", Toast.LENGTH_SHORT).show()
+                    }
+
+                } else {
+                    Toast.makeText(activity, "Enter a message", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .create()
+            .show()
     }
 
 }
