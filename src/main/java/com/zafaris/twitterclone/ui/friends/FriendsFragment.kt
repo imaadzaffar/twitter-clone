@@ -42,7 +42,7 @@ class FriendsFragment : Fragment() {
     }
 
     private fun getUsers() {
-        val usersQuery = ParseQuery.getQuery<ParseObject>("_User")
+        val usersQuery = ParseUser.getQuery()
         usersQuery.whereNotEqualTo("username", ParseUser.getCurrentUser().username)
         usersQuery.findInBackground { users, usersException ->
             if (users.size > 0 && usersException == null) {

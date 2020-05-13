@@ -19,9 +19,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         supportActionBar?.title = "Login"
 
-        if (ParseUser.getCurrentUser() == null) {
-            Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show()
-        } else {
+        if (ParseUser.getCurrentUser() != null) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

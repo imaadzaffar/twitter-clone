@@ -44,6 +44,7 @@ class FeedFragment : Fragment() {
         val feedQuery = ParseQuery.getQuery<ParseObject>("Tweet")
         feedQuery.whereContainedIn("username", friendsList)
         feedQuery.orderByDescending("createdAt")
+        feedQuery.limit = 20
         feedQuery.findInBackground { tweets, parseException ->
             if (parseException == null) {
 
